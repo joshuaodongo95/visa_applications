@@ -26,9 +26,6 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'user-edit']);
         Permission::create(['name' => 'user-delete']);
 
-        Permission::create(['name' => 'fee-list']);
-        Permission::create(['name' => 'fee-edit']);
-
         Permission::create(['name' => 'role-list']);
         Permission::create(['name' => 'role-create']);
         Permission::create(['name' => 'role-edit']);
@@ -44,22 +41,42 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'application-edit']);
         Permission::create(['name' => 'application-delete']);
 
+        Permission::create(['name' => 'agent-list']);
+        Permission::create(['name' => 'agent-create']);
+        Permission::create(['name' => 'agent-edit']);
+        Permission::create(['name' => 'agent-delete']);
+
+        Permission::create(['name' => 'fees-list']);
+        Permission::create(['name' => 'fees-create']);
+        Permission::create(['name' => 'fees-edit']);
+        Permission::create(['name' => 'fees-delete']);
+
+        Permission::create(['name' => 'profile-list']);
+        Permission::create(['name' => 'profile-create']);
+
 
 
         // create roles and assign existing permissions
         $role1 = Role::create(['name' => 'user']);
-        $role1->givePermissionTo('application-list');
+        
         $role1->givePermissionTo('application-create');
+        $role1->givePermissionTo('profile-list');
 
         $role2 = Role::create(['name' => 'admin']);
+
         $role2->givePermissionTo('application-list');
         $role2->givePermissionTo('application-create');
         $role2->givePermissionTo('application-edit');
         $role2->givePermissionTo('application-delete');
 
         
-        $role2->givePermissionTo('fee-list');
-        $role2->givePermissionTo('fee-edit');
+        $role2->givePermissionTo('fees-list');
+        $role2->givePermissionTo('fees-edit');
+
+        $role2->givePermissionTo('agent-list');
+        $role2->givePermissionTo('agent-create');
+        $role2->givePermissionTo('agent-edit');
+        $role2->givePermissionTo('fees-delete');
         
         $role2->givePermissionTo('user-list');
         $role2->givePermissionTo('user-create');
@@ -76,6 +93,8 @@ class PermissionSeeder extends Seeder
         $role2->givePermissionTo('role-create');
         $role2->givePermissionTo('role-edit');
         $role2->givePermissionTo('role-delete');
+
+        $role2->givePermissionTo('profile-list');
 
 
         $role3 = Role::create(['name' => 'Super-Admin']);

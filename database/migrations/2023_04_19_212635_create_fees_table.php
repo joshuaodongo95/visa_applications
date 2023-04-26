@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('fees', function (Blueprint $table) {
             $table->id();
             $table->string('item');
-            $table->integer('unit_cost');
+            $table->integer('unit_price');
             $table->string('discount');
             $table->timestamps();
         });

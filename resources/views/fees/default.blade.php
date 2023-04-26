@@ -1,5 +1,5 @@
 @extends('layouts.default')
-@section('title', 'Roles')
+@section('title', 'Fees')
 
 @section('breadcrumb')
     <ol class="breadcrumb">

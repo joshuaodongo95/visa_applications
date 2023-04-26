@@ -2,7 +2,7 @@
 
 @section("module", "Visa Applications")
 
-@section("submodule", "Visa Application")
+@section("submodule", "Visa Applications")
 @section('content')
 
         @if (\Session::has('success'))
@@ -28,7 +28,7 @@
                         <br>
                         {{ $application->agent->email ?? '' }}
                         <br>
-                        {{ $application->agent->telephone ?? '' }}
+                        {{ $application->agent->telephone ?? ''}}
                     </address>
                 </div>
                 <div class="col-xs-6 col-sm-6 col-md-6 text-right">
@@ -39,7 +39,7 @@
                         <em>Submission Date: {{$application->created_at ?? ''}}</em>
                     </p>
                     <p>
-                        <em>Created by : {{$application->created_by ?? ''}}</em>
+                        <em>Created by : {{$application->user->name ?? ''}}</em>
                     </p>
                 </div>
             </div>
@@ -60,7 +60,7 @@
                     <tbody>
                         <tr>
                             <td class="col-md-9"><em>{{$fees->item}}</em></h4></td>
-                            <td class="col-md-1" style="text-align: center"> {{$application->no_of_passports}} </td>
+                            <td class="col-md-1" style="text-align: center"> {{$application->no_of_passports ?? ''}} </td>
                             <td class="col-md-1 text-center">{{$fees->unit_price}}</td>
                             <td class="col-md-1 text-center">{{$application->total_cost ?? ''}}</td>
                         </tr>
@@ -88,7 +88,7 @@
                             <td>  </td>
                             <td>  </td>
                             <td class="text-right"><h4><strong>Total:</strong></h4></td>
-                            <td class="text-center"><h4><strong>{{$application->total_cost ?? ''}}</strong></h4></td>
+                            <td class="text-center"><h4><strong>{{$application->total_cost ?? '' }}</strong></h4></td>
                         </tr>
                     </tbody>
                 </table>

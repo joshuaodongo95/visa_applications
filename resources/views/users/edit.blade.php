@@ -15,7 +15,7 @@
         </div>
     @endif
     <div class="card">
-        <div class="card-header">Create user
+        <div class="card-header">Edit user
             <span class="float-right">
                 <a class="btn btn-primary" href="{{ route('users.index') }}">Users</a>
             </span>

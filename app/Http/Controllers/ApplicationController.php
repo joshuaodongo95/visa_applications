@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use DB;
 use App\Models\Fee;
+use App\Models\Agent;
 use App\Models\Application;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -31,7 +32,9 @@ class ApplicationController extends Controller
      */
     public function index(Request $request)
     {
-        $applications = Application::all();
+
+        $applications = Application::with('agent','user')->get();
+
         
         return view('applications.list', compact('applications'));
     }
@@ -44,7 +47,7 @@ class ApplicationController extends Controller
     public function create()
     {
         $fees = Fee::find(1);
-        return view('applications.create',compact('fees'));
+        return view('applications.create2',compact('fees'));
     }
 
     /**
@@ -56,25 +59,32 @@ class ApplicationController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'company' => 'required',
-            'no_of_passports' => 'required',
-            'collection_date' => 'required'
+            'agent' => 'required',
+            'no_of_passports' => 'required'
         ]);
 
         $no_of_passports = $request->input('no_of_passports');
         $fees = Fee::find(1);
-        $unit_cost = $fees->unit_cost;
-        $cost = $unit_cost * $no_of_passports;
+        $unit_cost = $fees->unit_price;
+        $discount_percentage = $fees->discount;
+        $discount = 0;
+        if($discount_percentage > 0){
+            $discount = $discount_percentage * $unit_cost;
+        }
+
+        $cost = ($unit_cost * $no_of_passports) - $discount;
 
         $application = new Application;
-    	$application->company = $request->input('company');
+        $application->agent_id = $request->input('agent_id');
     	$application->no_of_passports = $request->input('no_of_passports');
-        $application->agent = Auth::user()->name;
-        $application->collection_date = $request->input('collection_date');
-        $application->cost = $cost;
+        $application->user_id = Auth::user()->id;
+        $application->total_cost = $cost;
     	$application->save();
-        return redirect()->route('applications.index')
-            ->with('success', 'Client Visa Application submitted successfully.');
+        $application->id;
+
+        return redirect()->action(
+            [PrintController::class, 'index'], ['id' => $application->id]
+        );
     }
 
     /**
@@ -85,9 +95,10 @@ class ApplicationController extends Controller
      */
     public function show($id)
     {
-        $application = Application::find($id);
+        $fees    = Fee::find(1);
+        $application = Application::with('agent')->find($id);
 
-        return view('applications.show', compact('application'));
+        return view('applications.show',compact('application','fees'));
     }
 
     /**
@@ -113,16 +124,15 @@ class ApplicationController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'company' => 'required',
             'no_of_passports' => 'required',
             'collection_date' => 'required'
         ]);
     
         $data = array(
-    		'company' => $request ->input('company'),
+            'agent_id' => $request ->input('agent_id'),
     		'no_of_passports' => $request ->input('no_of_passports'),
     		'collection_date' => $request ->input('collection_date'),
-            'cost' => $request->input('cost')
+            'total_cost' => $request->input('cost')
     		);
     	Application::where('id', $id)->update($data);
         

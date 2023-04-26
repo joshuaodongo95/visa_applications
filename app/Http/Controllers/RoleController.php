@@ -63,7 +63,7 @@ class RoleController extends Controller
         $role = Role::create(['name' => $request->input('name')]);
         $role->syncPermissions($request->input('permission'));
     
-        return redirect()->route('roles.list')
+        return redirect()->route('roles.index')
             ->with('success', 'Role created successfully.');
     }
 
@@ -135,7 +135,7 @@ class RoleController extends Controller
     {
         Role::find($id)->delete();
         
-        return redirect()->route('roles.list')
+        return redirect()->route('roles.index')
             ->with('success', 'Role deleted successfully');
     }
 }

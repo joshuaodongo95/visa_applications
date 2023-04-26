@@ -23,13 +23,12 @@
             <div class="card-body">
                 {!! Form::open(array('route' => 'applications.store','method'=>'POST')) !!}
                     <div class="form-group">
-                        <strong>Company:</strong>
-                        {!! Form::text('company', null, array('placeholder' => 'Enter Company Name','class' => 'form-control')) !!}
-                    </div>
-                    <div class="form-group">
                         <strong>Agent:</strong>
-                        {!! Form::text('agent', null, array('placeholder' => 'Agent ','class' => 'form-control')) !!}
+                        {!! Form::text('agent', null, array('placeholder' => 'Enter Agent Name','class' => 'typeahead form-control', 'id'=>'search')) !!}
+                        
                     </div>
+                    {!! Form::hidden('agent_id', null, array('placeholder' => 'Enter Agent Name','class' => 'form-control', 'id'=>'agent_id')) !!}
+                    
                     <div class="form-group">
                         <strong>Created by:</strong>
                         <input type="text" name="created_by" class="form-control" id="created_by" value="{{Auth::user()->name}}"  disabled >

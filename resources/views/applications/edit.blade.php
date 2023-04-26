@@ -15,18 +15,13 @@
         </div>
     @endif
         <div class="card">
-            <div class="card-header">Edit Visa Application
+            <div class="card-header">Update Visa Application
                 <span class="float-right">
                     <a class="btn btn-primary" href="{{ route('applications.index') }}">Visa Applications</a>
                 </span>
             </div>
              <div class="card-body">
-                {!! Form::model($application, ['route' => ['applications.update', $application->id], 'method'=>'PATCH']) !!}
-                    <div class="form-group">
-                        <strong>Company:</strong>
-                            {!! Form::text('company', null, array('placeholder' => 'Enter Company Name','class' => 'form-control')) !!}
-                    </div>
-                            
+                {!! Form::model($application, ['route' => ['applications.update', $application->id], 'method'=>'PATCH']) !!}         
                     <div class="form-group">
                         <strong>No. of Passports:</strong>
                                 {!! Form::number('no_of_passports', null, array('placeholder' => 'Number of Passports','class' => 'form-control')) !!}
@@ -35,7 +30,7 @@
                         <strong>Collection Date:</strong>
                         {!! Form::date('collection_date', null, array('placeholder' => 'Collection Date. / Transaction ID','class' => 'form-control')) !!}
                     </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-success">Update</button>
                 {!! Form::close() !!}
             </div>
         </div>
